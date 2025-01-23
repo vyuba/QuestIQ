@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Core Colors */
+  --primary-color: #1e40af; /* Primary Blue */
+  --secondary-color: #1d2330; /* Warm purple */
+  --accent-color: #996dff; /* Vibrant purple */
+  --border-color: #252c3a; /* border color  */
+  --neutral-color: #9ca3af; /* Neutral Gray */
+
+  /* Background & Text Colors */
+  --background-color: #161a24; /* White Background */
+  --text-color: #d9d9d9; /* Primary Text Color */
+  --secondary-text-color: #4c5976; /* Primary Text Color */
+
+  /* Status Colors */
+  --danger-color: #f77070; /* Error Red */
+  --danger-dark-color: #ab3030; /* Error dark Red */
+  --success-color: #abf770; /* Success Green */
+  --success-dark-color: #5cad1d; /* Success dark Green */
+  --warning-color: #f59e0b; /* Warning Yellow */
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+/* Patriot Font Variants */
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-Light.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-Light.woff") format("woff");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-Normal.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-Normal.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-Regular.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-Regular.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-Medium.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-Medium.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-Bold.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-Bold.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-UltraBold.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-UltraBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Patriot";
+  src: url("../public/fonts/partriot/Patriot-Black.woff2") format("woff2"),
+    url("../public/fonts/partriot/Patriot-Black.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Neue Font Variants */
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ Thin.ttf")
+    format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ ExtraLight.ttf")
+    format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ Light.ttf")
+    format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ Medium.ttf")
+    format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ DemiBold.ttf")
+    format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ Bold.ttf")
+    format("truetype");
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ ExtraBold.ttf")
+    format("truetype");
+  font-weight: 800;
+}
+
+@font-face {
+  font-family: "Neue";
+  src: url("../public/fonts/tt_firs_neue/TT\ Firs\ Neue\ Trial\ Black.ttf")
+    format("truetype");
+  font-weight: 900;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 100px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 9px solid var(--accent-color);
+  animation: l20-1 0.8s infinite linear alternate, l20-2 1.6s infinite linear;
+}
+@keyframes l20-1 {
+  0% {
+    clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+  }
+  12.5% {
+    clip-path: polygon(
+      50% 50%,
+      0 0,
+      50% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%,
+      100% 0%
+    );
+  }
+  25% {
+    clip-path: polygon(
+      50% 50%,
+      0 0,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      100% 100%,
+      100% 100%
+    );
+  }
+  50% {
+    clip-path: polygon(
+      50% 50%,
+      0 0,
+      50% 0%,
+      100% 0%,
+      100% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+  62.5% {
+    clip-path: polygon(
+      50% 50%,
+      100% 0,
+      100% 0%,
+      100% 0%,
+      100% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+  75% {
+    clip-path: polygon(
+      50% 50%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      100% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+  100% {
+    clip-path: polygon(
+      50% 50%,
+      50% 100%,
+      50% 100%,
+      50% 100%,
+      50% 100%,
+      50% 100%,
+      0% 100%
+    );
+  }
+}
+@keyframes l20-2 {
+  0% {
+    transform: scaleY(1) rotate(0deg);
+  }
+  49.99% {
+    transform: scaleY(1) rotate(135deg);
+  }
+  50% {
+    transform: scaleY(-1) rotate(0deg);
+  }
+  100% {
+    transform: scaleY(-1) rotate(-135deg);
+  }
+}
+
+.logo-text {
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: var(--accent-color);
+}
+
+/* Hide scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+* {
+  scrollbar-width: none;
+}
