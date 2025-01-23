@@ -1,4 +1,9 @@
+import { useParams } from "react-router";
+
 function QuizPage() {
+  const id = useParams();
+
+  console.log(id);
   return (
     <div className="w-full  h-[calc(100dvh-100px)] p-5 relative">
       <div className="bg-secondary-color rounded-md border font-neue text-text-color border-border-color w-full h-full p-5">

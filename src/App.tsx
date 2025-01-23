@@ -90,7 +90,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />}>
             <Route index element={<DashboardHome />} />
             <Route path="leaderboard" element={<DashboardLeaderboard />} />
-            <Route path="about-quiz" element={<QuizPage />} />
+            <Route path="about-quiz/:id" element={<QuizPage />} />
             <Route path="inbox" element={<DashboardInbox />} />
           </Route>
           <Route path="quiz" element={<Quiz />} />

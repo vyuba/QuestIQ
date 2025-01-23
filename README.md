@@ -1,51 +1,73 @@
-# React + TypeScript + Vite
+# QuestIQ - Web3 Gamified Quiz Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🚀 Introduction
 
-Currently, two official plugins are available:
+QuestIQ is a gamified quiz platform designed for Web3 projects. Users can sign up with Google or their crypto wallets, join different projects, and participate in quizzes to earn rewards. Projects can also create and manage their own quizzes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Features
 
-## Expanding the ESLint configuration
+- **User Authentication:** Sign up using Google or a crypto wallet.
+- **Project-Based Quizzes:** Users can join Web3 projects and solve quizzes before deadlines.
+- **Streak System:** Daily quiz participation earns streak bonuses.
+- **Leaderboard & XP:** Users track their progress with an XP-based leaderboard.
+- **Project Creation:** Users can upgrade to create and manage quizzes for their own projects.
+- **Exportable Leaderboard:** Projects can export user performance data.
+- **Categories & Filters:** Quizzes are categorized for easy navigation.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🏗️ Tech Stack
 
-- Configure the top-level `parserOptions` property like this:
+- **Frontend:** React, TypeScript, Tailwind CSS, Framer Motion
+- **Backend:** Appwrite, Firebase (for authentication)
+- **Database:** MongoDB
+- **State Management:** React Query
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 🎮 How It Works
+
+1. **Sign Up:** Users register using Google or a crypto wallet.
+2. **Join a Project:** Users browse and join Web3 projects.
+3. **Play Quizzes:** Answer multiple-choice questions before the deadline.
+4. **Earn Rewards:** Gain XP, track progress, and maintain streaks.
+5. **Create a Project:** Upgrade to create and manage quizzes.
+6. **Monitor Performance:** Check rankings on the leaderboard.
+
+## 📜 Installation
+
+Clone the repository and install dependencies:
+
+```bash
+git clone https://github.com/your-repo/questiq.git
+cd questiq
+npm install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Run the development server:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm run dev
 ```
-# QuestIQ
+
+## 🔧 Environment Variables
+
+Create a `.env` file in the root directory and add:
+
+```
+REACT_APP_APPWRITE_ENDPOINT=your-appwrite-endpoint
+REACT_APP_APPWRITE_PROJECT_ID=your-project-id
+REACT_APP_FIREBASE_API_KEY=your-firebase-api-key
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Fork the repo, create a new branch, and submit a pull request.
+
+## 📜 License
+
+MIT License
+
+## 📬 Contact
+
+For inquiries, reach out at **support@questiq.com** or join our Discord community.
+
+---
+
+_QuestIQ - Gamifying Web3 Learning!_ 🚀

@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useNavigate, Link } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardNavber from "../../components/DashboardNavber";
 import {
   ChartBarStacked,
@@ -9,8 +9,11 @@ import {
   Puzzle,
   Settings,
 } from "lucide-react";
+import { useGetDatabase } from "../../hooks/useDatabase";
+import { useUser } from "../../store";
 import { useAuthUser } from "../../hooks/useUser";
 import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 
 function Dashboard() {
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
@@ -38,6 +41,21 @@ function Dashboard() {
       icon: <Inbox />,
     },
   ];
+
+  const { getUserProjects } = useGetDatabase();
+  const { user } = useUser();
+  const [projects, setProjects] = useState([]);
+
+  const { isLoading, data } = useQuery({
+    queryKey: ["projects"],
+    queryFn: () => getUserProjects(user),
+  });
+
+  useEffect(() => {
+    if (data) {
+      setProjects(data);
+    }
+  }, [data]);
   return (
     <div>
       <div className="w-full h-full flex flex-row ">
@@ -82,14 +100,19 @@ function Dashboard() {
                 ))}
               </ul>
             </div>
-            <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col md:flex-row gap-7  relative">
+            <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col md:flex-row gap-1  relative">
               {/* <button
               onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}
               className="md:hidden p-1 self-end w-fit border-2 rounded-md border-border-color "
             >
               <X className="text-text-color bg-transparent " />
             </button> */}
-              <span className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"></span>
+              {projects.map((data) => (
+                <span
+                  key={data?.$id}
+                  className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"
+                ></span>
+              ))}
               {/* <Link to="/auth/login">
               <button className="border border-border-color capitalize p-2 px-4 text-lg rounded-xl bg-secondary w-fit flex flex-row gap-3 items-center">
                 <LogOut size={20} />
