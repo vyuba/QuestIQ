@@ -8,7 +8,7 @@ function Settings() {
       <div className="md:hidden py-3 w-full flex flex-row justify-between items-center">
         <span className="logo-text flex items-center gap-4 text-text-color font-semibold text-xl">
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/cw/dashboard")}
             className="p-2 border border-border-color rounded-md"
           >
             <ArrowLeftIcon />

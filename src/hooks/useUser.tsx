@@ -3,7 +3,7 @@ import { account, ID } from "../lib/appwrite";
 import { useUser } from "../store";
 import { NavigateFunction } from "react-router";
 export const useAuthUser = () => {
-  const { setUserSession, setUser, user } = useUser();
+  const { setUserSession, setUser, user, resetUser } = useUser();
   // const user = useUser((state) => state.user);
 
   // const checkUserIsNew = async (user: User) => {
@@ -37,6 +37,8 @@ export const useAuthUser = () => {
   const handleLogout = async (navigate: NavigateFunction) => {
     try {
       await account.deleteSession("current");
+      resetUser();
+      CheckUser();
       navigate("/");
     } catch (error) {
       return error;

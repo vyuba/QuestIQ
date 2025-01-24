@@ -1,8 +1,15 @@
-import { Menu, X, LogOut, Image, ImagePlus } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router";
+import { Menu, X } from "lucide-react";
+import React from "react";
 
-function DashboardNavber({ setIsDashboardMenuOpen, isDashboardMenuOpen }) {
+interface DashboardNavberprops {
+  setIsDashboardMenuOpen: (isDashboardMenuOpen: boolean) => void;
+  isDashboardMenuOpen: boolean;
+}
+
+const DashboardNavber: React.FC<DashboardNavberprops> = ({
+  setIsDashboardMenuOpen,
+  isDashboardMenuOpen,
+}) => {
   return (
     <div className="w-full">
       <nav className="bg-inherit flex items-center justify-between p-5">
@@ -23,6 +30,6 @@ function DashboardNavber({ setIsDashboardMenuOpen, isDashboardMenuOpen }) {
       </nav>
     </div>
   );
-}
+};
 
 export default DashboardNavber;

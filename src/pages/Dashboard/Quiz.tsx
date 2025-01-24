@@ -1,10 +1,29 @@
 import { ArrowLeft } from "lucide-react";
 import QuestionCard from "../../components/QuestionCard";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router";
 import { useGetDatabase } from "../../hooks/useDatabase";
 import { useQuery } from "@tanstack/react-query";
-function Quiz() {
+import { type Models } from "appwrite";
+
+interface Data extends Models.DocumentList<Models.Document> {
+  total: number;
+  documents: Document[];
+  $id: string;
+  $collectionId: string;
+  $databaseId: string;
+  $createdAt: string;
+  $updatedAt: string;
+  $permissions: string[];
+  correct_answer: string;
+  points: number;
+  question_id: string;
+  question_text: string;
+  quiz_id: string;
+  type_Question: string;
+  options: string[];
+}
+const Quiz: React.FC<Data> = () => {
   const { id } = useParams();
   const { getQuiz } = useGetDatabase();
   const { data } = useQuery({
@@ -72,14 +91,19 @@ function Quiz() {
       </div>
       <div className="flex w-full gap-2 right-0 px-3 absolute bottom-0 flex-row justify-between items-center py-5">
         <button
+          disabled={activeIndex === 0 ? true : false}
           onClick={handlePrev}
-          className=" capitalize text-text-color font-neue bg-accent-color border-2 border-border-color py-2 px-5 rounded-md font-medium"
+          className={` ${
+            activeIndex === 0
+              ? "bg-secondary-color cursor-not-allowed"
+              : "bg-accent-color"
+          }  capitalize text-text-color font-neue bg-accent-color border-2 text-sm md:text-base border-border-color py-2 px-5 rounded-md font-medium`}
         >
           prev
         </button>
         <button
           disabled={activeIndex !== data?.total - 1 ? true : false}
-          className={` capitalize text-text-color font-neue  border-2 border-border-color flex-1 py-2 px-5 rounded-md font-medium ${
+          className={` capitalize text-sm md:text-base text-text-color font-neue  border-2 border-border-color flex-1 py-2 px-5 rounded-md font-medium ${
             activeIndex !== data?.total - 1
               ? "bg-secondary-color cursor-not-allowed"
               : "bg-accent-color cursor-pointer"
@@ -89,13 +113,13 @@ function Quiz() {
         </button>
         <button
           onClick={handleNext}
-          className=" capitalize text-text-color font-neue bg-accent-color border-2 border-border-color py-2 px-5 rounded-md font-medium"
+          className="text-sm md:text-base capitalize text-text-color font-neue bg-accent-color border-2 border-border-color py-2 px-5 rounded-md font-medium"
         >
           next
         </button>
       </div>
     </div>
   );
-}
+};
 
 export default Quiz;

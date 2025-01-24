@@ -25,19 +25,19 @@ function Dashboard() {
     {
       id: 1,
       pathName: "leaderboard",
-      path: "/dashboard/leaderboard",
+      path: "/cw/dashboard/leaderboard",
       icon: <ChartBarStacked />,
     },
     {
       id: 2,
       pathName: "Quizes",
-      path: "/dashboard/",
+      path: "/cw/dashboard/",
       icon: <Puzzle />,
     },
     {
       id: 3,
       pathName: "inbox",
-      path: "/dashboard/inbox",
+      path: "/cw/dashboard/inbox",
       icon: <Inbox />,
     },
   ];
@@ -56,6 +56,7 @@ function Dashboard() {
       setProjects(data);
     }
   }, [data]);
+
   return (
     <div>
       <div className="w-full h-full flex flex-row ">
@@ -102,10 +103,12 @@ function Dashboard() {
             </div>
             <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col gap-1  relative">
               {projects.map((data) => (
-                <span
-                  key={data?.$id}
-                  className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"
-                ></span>
+                <Link to={`${data?.project_name}`}>
+                  <span
+                    key={data?.$id}
+                    className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"
+                  ></span>
+                </Link>
               ))}
               <div className="absolute flex-col gap-5 border-t-2 border-border-color pt-4 bottom-3 flex items-center justify-center  w-full">
                 <button>

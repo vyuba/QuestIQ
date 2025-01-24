@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { account } from "../../lib/appwrite";
 import { type Models } from "appwrite";
 import { useUser } from "../../store";
-// import { useAuthUser } from "../../hooks/useUser";
+import { useAuthUser } from "../../hooks/useUser";
 
 interface Session extends Models.Token {
   $id: string;
@@ -17,6 +17,7 @@ interface Session extends Models.Token {
 function OtpSession() {
   const [inputs, setInputs] = useState(["", "", "", "", "", ""]);
   const navigate = useNavigate();
+  const { CheckUser } = useAuthUser();
   const { session } = useUser();
 
   const handleOtp = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
@@ -72,6 +73,7 @@ function OtpSession() {
       // if (response !== null) {
       //   navigate("/auth/signup");
       // }
+      CheckUser();
       navigate("/");
     } catch (error) {
       console.log(error);

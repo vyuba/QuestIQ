@@ -33,7 +33,7 @@ function QuizPage() {
       </div>
 
       <div className="font-neue fixed bottom-0 right-0 my-2 px-3 w-full ">
-        <Link to={`/dashboard/quiz/${id}`}>
+        <Link to={`/quiz/${""}/${id}`}>
           <button className="bg-accent-color border-2 border-border-color font-medium text-lg capitalize w-full rounded-md py-2 text-text-color ">
             start
           </button>

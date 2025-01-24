@@ -21,12 +21,15 @@ import Quiz from "./pages/Dashboard/Quiz";
 
 function App() {
   const { CheckUser } = useAuthUser();
-  const { isLoading } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: ["checkUser"],
     queryFn: CheckUser,
   });
   if (isLoading) {
     return <Loader />;
+  }
+  if (error) {
+    console.log(error);
   }
 
   // toast.custom((t) => (
@@ -87,14 +90,14 @@ function App() {
             <Route path="otp-session" element={<OtpSession />} />
             <Route path="create-project" element={<CreateProject />} />
           </Route>
-          <Route path="/dashboard" element={<Dashboard />}>
-            <Route index element={<DashboardHome />} />
+          <Route path="/cw/dashboard" element={<Dashboard />}>
+            <Route path=":project" element={<DashboardHome />} />
             <Route path="leaderboard" element={<DashboardLeaderboard />} />
             <Route path="about-quiz/:id" element={<QuizPage />} />
-            <Route path="quiz/:id" element={<Quiz />} />
             <Route path="inbox" element={<DashboardInbox />} />
           </Route>
-          <Route path="/settings" element={<Settings />}>
+          <Route path="/quiz/:project/:id" element={<Quiz />} />
+          <Route path="/cw/settings" element={<Settings />}>
             <Route index element={<SettingsHome />} />
             <Route path="profile" element={<SettingsProfile />} />
           </Route>
