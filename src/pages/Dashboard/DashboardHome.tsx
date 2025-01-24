@@ -1,24 +1,27 @@
 import { Puzzle } from "lucide-react";
 import QuizCard from "../../components/QuizCard";
-import { Link } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useGetDatabase } from "../../hooks/useDatabase";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useDatabase } from "../../databaseStore";
 function DashboardHome() {
   const { getProjectQuiz } = useGetDatabase();
-  const [quiz, setQuiz] = useState([]);
+  const { UserQuizDatabase, setUserQuizDatabase } = useDatabase();
+  // const [quiz, setQuiz] = useState([]);
 
-  const { isLoading, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["quiz"],
     queryFn: () => getProjectQuiz("67923c4e002d674b3986"),
   });
   useEffect(() => {
     if (data) {
-      setQuiz(data);
+      setUserQuizDatabase(data);
+      // setQuiz(data);
     }
-  }, [data]);
+  }, [data, setUserQuizDatabase]);
 
-  console.log(quiz);
+  console.log(UserQuizDatabase);
+  // console.log(quiz);
 
   return (
     <div className="w-full p-5">
@@ -34,7 +37,7 @@ function DashboardHome() {
         </span>
       </header>
       <div className="py-5 w-full grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2">
-        {quiz.map((data) => (
+        {UserQuizDatabase?.map((data) => (
           <QuizCard
             key={data?.$id}
             id={data?.$id}

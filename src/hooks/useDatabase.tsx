@@ -1,7 +1,6 @@
 import { config } from "../lib/env";
 import { databases, Query } from "../lib/appwrite";
 import { User } from "../store";
-import { useState } from "react";
 export const useGetDatabase = () => {
   const getUserData = async (user: User) => {
     try {
@@ -25,9 +24,6 @@ export const useGetDatabase = () => {
         config.userProjectsCollectionId,
         [Query.equal("user_id", user?.$id)]
       );
-
-      //   console.log(response);
-
       const projectIds = response?.documents.map((doc) => doc.user_project_id);
 
       if (!projectIds || projectIds.length === 0) return [];
@@ -42,9 +38,6 @@ export const useGetDatabase = () => {
           return projectResponse.documents;
         })
       );
-
-      //   console.log(userProjects.flat());
-
       return userProjects.flat();
     } catch (error) {
       console.log(error);
@@ -66,5 +59,33 @@ export const useGetDatabase = () => {
     }
   };
 
-  return { getUserData, getUserProjects, getProjectQuiz };
+  const getQuizData = async (id: string) => {
+    try {
+      const response = await databases.getDocument(
+        config.databaseId,
+        config.userProjectsQuizId,
+        id
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  const getQuiz = async (id: string) => {
+    try {
+      const response = await databases.listDocuments(
+        config.databaseId,
+        config.QuizQuestionId,
+        [Query.equal("quiz_id", id)]
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
+  return { getUserData, getUserProjects, getProjectQuiz, getQuizData, getQuiz };
 };

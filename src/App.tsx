@@ -91,9 +91,9 @@ function App() {
             <Route index element={<DashboardHome />} />
             <Route path="leaderboard" element={<DashboardLeaderboard />} />
             <Route path="about-quiz/:id" element={<QuizPage />} />
+            <Route path="quiz/:id" element={<Quiz />} />
             <Route path="inbox" element={<DashboardInbox />} />
           </Route>
-          <Route path="quiz" element={<Quiz />} />
           <Route path="/settings" element={<Settings />}>
             <Route index element={<SettingsHome />} />
             <Route path="profile" element={<SettingsProfile />} />

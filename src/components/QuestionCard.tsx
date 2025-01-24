@@ -1,6 +1,16 @@
 import { Check } from "lucide-react";
-import { useState } from "react";
-function QuestionCard({ z, question, options, answer }) {
+import React, { useState } from "react";
+
+interface QuestionCard {
+  question: string;
+  answer: string;
+  options: string[];
+}
+const QuestionCard: React.FC<QuestionCard> = ({
+  question,
+  options,
+  answer,
+}) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
   return (
@@ -39,6 +49,6 @@ function QuestionCard({ z, question, options, answer }) {
       </div>
     </div>
   );
-}
+};
 
 export default QuestionCard;

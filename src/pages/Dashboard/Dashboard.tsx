@@ -68,11 +68,11 @@ function Dashboard() {
         </div>
         <div
           className={` ${
-            isDashboardMenuOpen ? "fixed" : "hidden md:flex"
-          } px-2 md:p-0   bg-transparent z-[1000] flex justify-center h-screen overflow-hidden items-end top-0 right-0 md:right-2 md:mr-3`}
+            isDashboardMenuOpen ? "fixed flex" : "hidden md:flex "
+          } px-2 md:p-0   bg-transparent z-[1000]  justify-center h-screen overflow-hidden items-end top-0 right-0 md:right-2 md:mr-3  md:w-full md:max-w-[260px]`}
         >
-          <div className="flex flex-row w-full h-[calc(100dvh-100px)] md:h-[calc(100%-20px)] bg-secondary-color mb-2  border-2 border-border-color rounded-xl  overflow-hidden gap-2 p-2">
-            <div className=" w-48 md:w-56 border-2 border-border-color rounded-lg h-full bg-background-color p-2">
+          <div className="flex flex-row w-fit h-[calc(100dvh-100px)] md:h-[calc(100%-20px)] bg-secondary-color mb-2  border-2 border-border-color rounded-xl  overflow-hidden gap-2 p-2">
+            <div className=" w-48 md:max-w-[54] border-2 border-border-color rounded-lg h-full bg-background-color p-2">
               <div className="w-full h-[136px] bg-secondary-color border-2 border-border-color rounded-md flex items-center justify-center">
                 <ImagePlus
                   size={24}
@@ -100,25 +100,13 @@ function Dashboard() {
                 ))}
               </ul>
             </div>
-            <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col md:flex-row gap-1  relative">
-              {/* <button
-              onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}
-              className="md:hidden p-1 self-end w-fit border-2 rounded-md border-border-color "
-            >
-              <X className="text-text-color bg-transparent " />
-            </button> */}
+            <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col gap-1  relative">
               {projects.map((data) => (
                 <span
                   key={data?.$id}
                   className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"
                 ></span>
               ))}
-              {/* <Link to="/auth/login">
-              <button className="border border-border-color capitalize p-2 px-4 text-lg rounded-xl bg-secondary w-fit flex flex-row gap-3 items-center">
-                <LogOut size={20} />
-                <span className="font-medium">log in</span>
-              </button>
-            </Link> */}
               <div className="absolute flex-col gap-5 border-t-2 border-border-color pt-4 bottom-3 flex items-center justify-center  w-full">
                 <button>
                   <Link to={"/settings/"}>

@@ -8,7 +8,7 @@ function SettingsProfile() {
 
   const { getUserData } = useGetDatabase();
 
-  const { isLoading, data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["userdata"],
     queryFn: () => getUserData(user),
   });
