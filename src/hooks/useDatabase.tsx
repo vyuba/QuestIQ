@@ -1,6 +1,7 @@
 import { config } from "../lib/env";
 import { databases, Query } from "../lib/appwrite";
 import { User } from "../store";
+import { Models } from "appwrite";
 export const useGetDatabase = () => {
   const getUserData = async (user: User) => {
     try {
@@ -24,21 +25,26 @@ export const useGetDatabase = () => {
         config.userProjectsCollectionId,
         [Query.equal("user_id", user?.$id)]
       );
-      const projectIds = response?.documents.map((doc) => doc.user_project_id);
 
-      if (!projectIds || projectIds.length === 0) return [];
+      const projects = response?.documents;
+      if (!projects || projects.length === 0) return [];
 
       const userProjects = await Promise.all(
-        projectIds.map(async (projectId) => {
+        projects.map(async (project) => {
           const projectResponse = await databases.listDocuments(
             config.databaseId,
             config.projectCollectinId,
-            [Query.equal("$id", projectId)]
+            [Query.equal("$id", project?.user_project_id)]
           );
-          return projectResponse.documents;
+
+          return {
+            ...project, // Spread the current user's project
+            projectData: projectResponse.documents[0] || null, // Include related project data
+          };
         })
       );
-      return userProjects.flat();
+
+      return userProjects;
     } catch (error) {
       console.log(error);
       return [];
@@ -51,21 +57,28 @@ export const useGetDatabase = () => {
         config.databaseId,
         config.projectCollectinId
       );
-      const projectIds = response?.documents.map((doc) => doc.$id);
 
-      if (!projectIds || projectIds.length === 0) return [];
+      if (!response?.documents || response.documents.length === 0) return [];
 
-      const userProjects = await Promise.all(
-        projectIds.map(async (projectId) => {
-          const projectResponse = await databases.listDocuments(
+      const projectsWithQuizzes = await Promise.all(
+        response.documents.map(async (project) => {
+          const projectId = project.$id;
+
+          // Fetch quizzes related to this project
+          const quizResponse = await databases.listDocuments(
             config.databaseId,
             config.userProjectsQuizId,
             [Query.equal("project_id", projectId)]
           );
-          return projectResponse.documents;
+
+          return {
+            ...project, // Include project details
+            quizzes: quizResponse.documents || [], // Attach quiz data
+          };
         })
       );
-      return userProjects.flat();
+
+      return projectsWithQuizzes;
     } catch (error) {
       console.log(error);
       return [];
@@ -86,7 +99,7 @@ export const useGetDatabase = () => {
     }
   };
 
-  const getQuizData = async (id: string) => {
+  const getQuizData = async (id: string): Promise<Models.Document | null> => {
     try {
       const response = await databases.getDocument(
         config.databaseId,

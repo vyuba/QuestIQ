@@ -2,48 +2,52 @@ import { Puzzle } from "lucide-react";
 import QuizCard from "../../components/QuizCard";
 import { useQuery } from "@tanstack/react-query";
 import { useGetDatabase } from "../../hooks/useDatabase";
-import { useEffect } from "react";
-import { useDatabase } from "../../databaseStore";
+import { useLocation } from "react-router";
+
 function DashboardHome() {
   const { getProjectQuiz } = useGetDatabase();
-  const { UserQuizDatabase, setUserQuizDatabase } = useDatabase();
-  // const [quiz, setQuiz] = useState([]);
+  const location = useLocation();
+  const project = location.state;
 
-  const { data } = useQuery({
-    queryKey: ["quiz"],
-    queryFn: () => getProjectQuiz("67923c4e002d674b3986"),
+  const {
+    data: quizzes,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["quiz", project?.projectData?.$id],
+    queryFn: () =>
+      project?.projectData?.$id
+        ? getProjectQuiz(project.projectData.$id)
+        : Promise.resolve([]),
+    enabled: !!project?.projectData?.$id,
   });
-  useEffect(() => {
-    if (data) {
-      setUserQuizDatabase(data);
-      // setQuiz(data);
-    }
-  }, [data, setUserQuizDatabase]);
 
-  console.log(UserQuizDatabase);
-  // console.log(quiz);
+  if (!project) return <p className="text-red-500">No project found</p>;
+  if (isLoading) return <p>Loading quizzes...</p>;
+  if (isError) return <p className="text-red-500">Failed to fetch quizzes</p>;
 
   return (
     <div className="w-full p-5">
       <header className="w-full flex items-center justify-between">
-        <span className=" flex items-center justify-center gap-2">
+        <span className="flex items-center gap-2">
           <Puzzle className="stroke-accent-color" />
           <h1 className="text-xl font-medium font-neue text-text-color">
-            Quest
+            {project?.projectData?.project_name}
           </h1>
         </span>
-        <span className=" flex items-center justify-center  logo-text text-3xl bg-secondary-color py-2 px-[14px] border-2 border-border-color text-center rounded-full text-text-color font-patriot">
+        <span className="logo-text text-3xl bg-secondary-color py-2 px-[14px] border-2 border-border-color text-center rounded-full text-text-color font-patriot">
           <p>q</p>
         </span>
       </header>
+
       <div className="py-5 w-full grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2">
-        {UserQuizDatabase?.map((data) => (
+        {quizzes?.map((quiz) => (
           <QuizCard
-            key={data?.$id}
-            id={data?.$id}
-            description={data?.description}
-            reward_xp={data?.reward_xp}
-            title={data?.title}
+            key={quiz?.$id}
+            id={quiz?.$id}
+            description={quiz?.description}
+            reward_xp={quiz?.reward_xp}
+            title={quiz?.title}
           />
         ))}
       </div>

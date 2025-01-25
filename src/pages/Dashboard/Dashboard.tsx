@@ -14,10 +14,13 @@ import { useUser } from "../../store";
 import { useAuthUser } from "../../hooks/useUser";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import { useProject } from "../../projectStore";
+import Loader from "../../components/Loader";
 
 function Dashboard() {
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
   const { handleLogout } = useAuthUser();
+  const { setCurrentProject, currentProject } = useProject();
 
   const navigate = useNavigate();
 
@@ -44,18 +47,30 @@ function Dashboard() {
 
   const { getUserProjects } = useGetDatabase();
   const { user } = useUser();
-  const [projects, setProjects] = useState([]);
 
   const { isLoading, data } = useQuery({
     queryKey: ["projects"],
-    queryFn: () => getUserProjects(user),
+    queryFn: () => {
+      if (user) {
+        return getUserProjects(user); // Call the function only if user is not null
+      } else {
+        // Handle the case when user is null
+        return []; // or return an appropriate value
+      }
+    },
   });
+
+  if (isLoading) {
+    <Loader />;
+  }
 
   useEffect(() => {
     if (data) {
-      setProjects(data);
+      setCurrentProject(data);
     }
-  }, [data]);
+  }, [data, setCurrentProject]);
+
+  // console.log(data);
 
   return (
     <div>
@@ -102,12 +117,14 @@ function Dashboard() {
               </ul>
             </div>
             <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col gap-1  relative">
-              {projects.map((data) => (
-                <Link to={`${data?.project_name}`}>
-                  <span
-                    key={data?.$id}
-                    className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"
-                  ></span>
+              {currentProject?.map((data) => (
+                <Link
+                  className="w-12 h-12 bg-background-color rounded-lg border-2 border-border-color"
+                  to={`${data?.projectData?.project_name}`}
+                  state={data}
+                  key={data.$id}
+                >
+                  <span key={data?.$id} className=""></span>
                 </Link>
               ))}
               <div className="absolute flex-col gap-5 border-t-2 border-border-color pt-4 bottom-3 flex items-center justify-center  w-full">

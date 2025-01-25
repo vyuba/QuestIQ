@@ -260,3 +260,10 @@ body {
 * {
   scrollbar-width: none;
 }
+
+.truncated-text {
+  text-overflow: ellipsis; /* Adds the "..." when text overflows */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Controls how many lines of text to show before truncating */
+  -webkit-box-orient: vertical;
+}

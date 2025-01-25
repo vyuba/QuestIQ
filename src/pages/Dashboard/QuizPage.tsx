@@ -1,6 +1,20 @@
 import { Link, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useGetDatabase } from "../../hooks/useDatabase";
+import { type Models } from "appwrite";
+
+export interface Quiz extends Models.Document {
+  id: string;
+  title: string;
+  description: string;
+  reward_xp: number;
+  $id: string;
+  $collectionId: string;
+  $databaseId: string;
+  $createdAt: string;
+  $updatedAt: string;
+  $permissions: string[];
+}
 
 function QuizPage() {
   const { id } = useParams();
@@ -8,10 +22,15 @@ function QuizPage() {
 
   const { data } = useQuery({
     queryKey: ["quizPage"],
-    queryFn: () => getQuizData(id),
+    queryFn: async () => {
+      if (id) {
+        return getQuizData(id);
+      }
+      return [];
+    },
   });
 
-  console.log(data);
+  // console.log(data);
   return (
     <div className="w-full  h-[calc(100dvh-100px)] p-5 relative">
       <div className="bg-secondary-color rounded-md border font-neue text-text-color border-border-color w-full h-full p-5">
@@ -33,7 +52,7 @@ function QuizPage() {
       </div>
 
       <div className="font-neue fixed bottom-0 right-0 my-2 px-3 w-full ">
-        <Link to={`/quiz/${""}/${id}`}>
+        <Link to={`/quiz/${data?.title}/${id}`}>
           <button className="bg-accent-color border-2 border-border-color font-medium text-lg capitalize w-full rounded-md py-2 text-text-color ">
             start
           </button>

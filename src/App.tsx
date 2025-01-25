@@ -18,6 +18,7 @@ import DashboardInbox from "./pages/Dashboard/DashboardInbox";
 import CreateProject from "./pages/Auth/CreateProject";
 import QuizPage from "./pages/Dashboard/QuizPage";
 import Quiz from "./pages/Dashboard/Quiz";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   const { CheckUser } = useAuthUser();
@@ -93,7 +94,7 @@ function App() {
           <Route path="/cw/dashboard" element={<Dashboard />}>
             <Route path=":project" element={<DashboardHome />} />
             <Route path="leaderboard" element={<DashboardLeaderboard />} />
-            <Route path="about-quiz/:id" element={<QuizPage />} />
+            <Route path=":name/about-quiz/:id" element={<QuizPage />} />
             <Route path="inbox" element={<DashboardInbox />} />
           </Route>
           <Route path="/quiz/:project/:id" element={<Quiz />} />
@@ -101,6 +102,7 @@ function App() {
             <Route index element={<SettingsHome />} />
             <Route path="profile" element={<SettingsProfile />} />
           </Route>
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </>

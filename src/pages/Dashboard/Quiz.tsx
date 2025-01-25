@@ -23,12 +23,18 @@ interface Data extends Models.DocumentList<Models.Document> {
   type_Question: string;
   options: string[];
 }
-const Quiz: React.FC<Data> = () => {
+const Quiz: React.FC = () => {
   const { id } = useParams();
   const { getQuiz } = useGetDatabase();
   const { data } = useQuery({
     queryKey: ["quizes"],
-    queryFn: () => getQuiz(id),
+    queryFn: () => {
+      if (id) {
+        getQuiz(id);
+      } else {
+        return [];
+      }
+    },
   });
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -44,7 +50,7 @@ const Quiz: React.FC<Data> = () => {
 
   console.log(data);
   return (
-    <div className="p-5 relative h-[calc(100vh-100px)]">
+    <div className="p-5 relative h-[calc(100dvh)]">
       <div className="flex relative pt-3 items-center justify-between">
         <button className="text-text-color p-2 rounded-lg border-2 border-border-color">
           <ArrowLeft className="text-text-secondary-color" />
