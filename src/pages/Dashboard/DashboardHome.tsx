@@ -5,7 +5,7 @@ import { useGetDatabase } from "../../hooks/useDatabase";
 import { useLocation } from "react-router";
 
 function DashboardHome() {
-  const { getProjectQuiz } = useGetDatabase();
+  const { getProjectQuiz, handleProjectDp } = useGetDatabase();
   const location = useLocation();
   const project = location.state;
 
@@ -15,17 +15,21 @@ function DashboardHome() {
     isError,
   } = useQuery({
     queryKey: ["quiz", project?.projectData?.$id],
-    queryFn: () =>
-      project?.projectData?.$id
-        ? getProjectQuiz(project.projectData.$id)
-        : Promise.resolve([]),
+    queryFn: async () => {
+      if (project?.projectData?.$id) {
+        const quizzes = await getProjectQuiz(project.projectData.$id);
+        const image = await handleProjectDp(project.projectData.thumbnail_url);
+        return { quizzes, image };
+      }
+      return null;
+    },
     enabled: !!project?.projectData?.$id,
   });
-
   if (!project) return <p className="text-red-500">No project found</p>;
   if (isLoading) return <p>Loading quizzes...</p>;
   if (isError) return <p className="text-red-500">Failed to fetch quizzes</p>;
 
+  // console.log(project);
   return (
     <div className="w-full p-5">
       <header className="w-full flex items-center justify-between">
@@ -35,13 +39,13 @@ function DashboardHome() {
             {project?.projectData?.project_name}
           </h1>
         </span>
-        <span className="logo-text text-3xl bg-secondary-color py-2 px-[14px] border-2 border-border-color text-center rounded-full text-text-color font-patriot">
-          <p>q</p>
+        <span className="logo-text overflow-hidden text-3xl bg-secondary-color  w-16 border-2 border-border-color text-center rounded-full text-text-color font-patriot">
+          <img className="w-full" src={quizzes?.image} alt="" />
         </span>
       </header>
 
       <div className="py-5 w-full grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-2">
-        {quizzes?.map((quiz) => (
+        {quizzes?.quizzes?.map((quiz) => (
           <QuizCard
             key={quiz?.$id}
             id={quiz?.$id}

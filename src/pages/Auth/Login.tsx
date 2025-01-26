@@ -39,7 +39,7 @@ function Login() {
             id="email"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
-            className="bg-background-color border outline-accent-color outline-2 border-border-color p-3 rounded-lg font-neue text-text-color"
+            className="bg-background-color border outline-none  outline border-border-color p-3 rounded-lg font-neue text-text-color autofill:bg-background-color autofill:border-none  focus:outline-accent-color focus:ring-0"
             placeholder="e.g example@gmail.com"
             type="email"
           />

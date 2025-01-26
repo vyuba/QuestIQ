@@ -1,8 +1,7 @@
-import avater from "/src/assets/avater-1.svg";
 import { useUser } from "../../store";
 import { useGetDatabase } from "../../hooks/useDatabase";
 import { useQuery } from "@tanstack/react-query";
-
+import { result } from "../../lib/appwrite";
 function SettingsProfile() {
   const { user } = useUser();
 
@@ -10,7 +9,13 @@ function SettingsProfile() {
 
   const { data } = useQuery({
     queryKey: ["userdata"],
-    queryFn: () => getUserData(user),
+    queryFn: async () => {
+      if (user) {
+        return await getUserData(user);
+      } else {
+        return null;
+      }
+    },
   });
 
   const profileData = data?.documents[0];
@@ -30,7 +35,7 @@ function SettingsProfile() {
     <div>
       <div className="relative w-full h-full flex flex-col items-center justify-center">
         <div className=" bg-background-color rounded-t-3xl border-l border-r border-t border-border-color flex items-center justify-center ">
-          <img className="py-5 px-6 " src={avater} alt="" />
+          <img className="py-5 px-6 w-40" src={result} alt="" />
         </div>
         <div className="w-full flex flex-col gap-2 p-4 h-full bg-background-color rounded-xl border border-border-color">
           <span className="font-medium">{profileData?.name}</span>

@@ -6,15 +6,8 @@ import { useGetDatabase } from "../../hooks/useDatabase";
 import { useQuery } from "@tanstack/react-query";
 import { type Models } from "appwrite";
 
-interface Data extends Models.DocumentList<Models.Document> {
+export interface QuizData extends Models.DocumentList<Models.Document> {
   total: number;
-  documents: Document[];
-  $id: string;
-  $collectionId: string;
-  $databaseId: string;
-  $createdAt: string;
-  $updatedAt: string;
-  $permissions: string[];
   correct_answer: string;
   points: number;
   question_id: string;
@@ -27,20 +20,22 @@ const Quiz: React.FC = () => {
   const { id } = useParams();
   const { getQuiz } = useGetDatabase();
   const { data } = useQuery({
-    queryKey: ["quizes"],
-    queryFn: () => {
+    queryKey: ["quizes", id],
+    queryFn: async () => {
       if (id) {
-        getQuiz(id);
+        return await getQuiz(id);
       } else {
-        return [];
+        return null;
       }
     },
   });
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const totalQuizzes = data?.total ?? 0;
+
   const handleNext = () => {
     setActiveIndex((prevIndex) =>
-      prevIndex < data?.total - 1 ? prevIndex + 1 : data?.total - 1
+      prevIndex < totalQuizzes - 1 ? prevIndex + 1 : totalQuizzes - 1
     );
   };
 
@@ -56,7 +51,7 @@ const Quiz: React.FC = () => {
           <ArrowLeft className="text-text-secondary-color" />
         </button>
         <span className="text-lg font-neue font-semibold text-text-color absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[20%]">
-          {activeIndex} of {data?.total - 1}
+          {activeIndex} of {totalQuizzes - 1}
         </span>
         <span className="logo-text text-text-color font-medium font-patriot text-xl">
           QuestIQ
@@ -82,7 +77,7 @@ const Quiz: React.FC = () => {
               answer={data?.documents[activeIndex]?.correctAnswer}
             />
 
-            {activeIndex < data?.total - 1 && (
+            {activeIndex < totalQuizzes - 1 && (
               <div className="absolute w-[calc(100%-20px)] bottom-[-11px] right-0 -z-[1] overflow-hidden">
                 <QuestionCard
                   key={activeIndex + 1}
@@ -108,14 +103,14 @@ const Quiz: React.FC = () => {
           prev
         </button>
         <button
-          disabled={activeIndex !== data?.total - 1 ? true : false}
+          disabled={activeIndex !== totalQuizzes - 1 ? true : false}
           className={` capitalize text-sm md:text-base text-text-color font-neue  border-2 border-border-color flex-1 py-2 px-5 rounded-md font-medium ${
-            activeIndex !== data?.total - 1
+            activeIndex !== totalQuizzes - 1
               ? "bg-secondary-color cursor-not-allowed"
               : "bg-accent-color cursor-pointer"
           }`}
         >
-          {activeIndex !== data?.total - 1 ? "can't submit" : "submit"}
+          {activeIndex !== totalQuizzes - 1 ? "can't submit" : "submit"}
         </button>
         <button
           onClick={handleNext}

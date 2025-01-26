@@ -8,12 +8,6 @@ export interface Quiz extends Models.Document {
   title: string;
   description: string;
   reward_xp: number;
-  $id: string;
-  $collectionId: string;
-  $databaseId: string;
-  $createdAt: string;
-  $updatedAt: string;
-  $permissions: string[];
 }
 
 function QuizPage() {
@@ -26,7 +20,7 @@ function QuizPage() {
       if (id) {
         return getQuizData(id);
       }
-      return [];
+      return null;
     },
   });
 

@@ -9,4 +9,9 @@ const account = new Account(client);
 const databases = new Databases(client);
 const storage = new Storage(client);
 
-export { ID, account, databases, Query, storage };
+const result = storage.getFilePreview(
+  config.bucketId, // bucketId
+  "67954b7e0020f8d72c08" // fileId
+);
+
+export { ID, account, databases, Query, storage, result };

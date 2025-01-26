@@ -1,6 +1,6 @@
 import { Menu, X } from "lucide-react";
 import React from "react";
-
+import { Link } from "react-router";
 interface DashboardNavberprops {
   setIsDashboardMenuOpen: (isDashboardMenuOpen: boolean) => void;
   isDashboardMenuOpen: boolean;
@@ -13,9 +13,12 @@ const DashboardNavber: React.FC<DashboardNavberprops> = ({
   return (
     <div className="w-full">
       <nav className="bg-inherit flex items-center justify-between p-5">
-        <span className="font-patriot bg-transparent text-xl stroke-accent-color logo-text text-text-color">
+        <Link
+          className="font-patriot bg-transparent text-xl stroke-accent-color logo-text text-text-color"
+          to={"/"}
+        >
           QuestIQ
-        </span>
+        </Link>
 
         <button
           onClick={() => setIsDashboardMenuOpen(!isDashboardMenuOpen)}

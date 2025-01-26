@@ -13,6 +13,7 @@ function Home() {
     queryFn: getAllProjects,
   });
 
+  console.log(data);
   return (
     <>
       <div>
@@ -25,16 +26,18 @@ function Home() {
         <div className="overflow-x-auto w-full">
           <div className="w-full py-2 pl-3 grid grid-flow-col  gap-3">
             {data?.map((project) => (
-              <div key={project.$id}>
+              <div key={project?.projectData.$id}>
                 {project.quizzes.map((quiz) => (
                   <Link
-                    to={`/cw/dashboard/${project.project_name}`}
+                    key={project?.projectData.$id}
+                    to={`/cw/dashboard/${project?.projectData.project_name}`}
                     state={project}
                   >
                     <Card
-                      projectName={project.project_name}
+                      projectName={project?.projectData.project_name}
                       description={quiz.description}
                       reward={quiz.reward_xp}
+                      imageId={project?.projectData?.thumbnail_url}
                     />
                   </Link>
                 ))}

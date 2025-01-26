@@ -1,9 +1,12 @@
 // import { config } from "../lib/env";
 import { account, ID } from "../lib/appwrite";
-import { useUser } from "../store";
+import { useUser, useProfile } from "../store";
+import { useGetDatabase } from "./useDatabase";
 import { NavigateFunction } from "react-router";
 export const useAuthUser = () => {
   const { setUserSession, setUser, user, resetUser } = useUser();
+  const { reserProfile } = useProfile();
+  const { getUserData } = useGetDatabase();
   // const user = useUser((state) => state.user);
 
   // const checkUserIsNew = async (user: User) => {
@@ -38,6 +41,7 @@ export const useAuthUser = () => {
     try {
       await account.deleteSession("current");
       resetUser();
+      reserProfile();
       CheckUser();
       navigate("/");
     } catch (error) {
@@ -50,6 +54,7 @@ export const useAuthUser = () => {
       const isLoggedIn = await account.get();
       setUser(isLoggedIn);
       console.log(user);
+      getUserData(isLoggedIn);
       return isLoggedIn; // ✅ Return the result
     } catch (error) {
       console.error("Error checking user:", error);

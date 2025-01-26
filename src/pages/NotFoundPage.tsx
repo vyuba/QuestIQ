@@ -1,7 +1,6 @@
 import { LucideArrowUpRight } from "lucide-react";
 import Image404 from "../assets/404svg.svg";
 import { Link } from "react-router";
-import Header from "../components/Header";
 
 function NotFoundPage() {
   return (

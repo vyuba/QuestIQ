@@ -20,7 +20,7 @@ const QuestionCard: React.FC<QuestionCard> = ({
       <span className="text-sm font-medium">Gamerchair</span>
       <span className="font-medium text-base md:text-lg">{question}</span>
       <div className="flex flex-col w-full h-full gap-4">
-        {options.map((data, index) => (
+        {options?.map((data, index) => (
           <label
             key={index}
             className={`border border-border-color p-4 text-center font-medium rounded-lg text-sm md:text-base hover:border-accent-color transition-all cursor-pointer relative

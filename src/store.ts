@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { type Models } from "appwrite";
 import { User } from "lucide-react";
+import { ProfileOp } from "./components/Navbar";
 
 interface User extends Models.User<Models.Preferences> {
   $id: string;
@@ -49,4 +50,16 @@ const useUser = create<UserState>((set) => ({
   resetUser: () => set({ user: null, session: null }),
 }));
 
-export { useUser, User, type UserState };
+interface UserProfile {
+  profile: null | ProfileOp;
+  setProfile: (profile: UserProfile["profile"]) => void;
+  reserProfile: () => void;
+}
+
+const useProfile = create<UserProfile>((set) => ({
+  profile: null,
+  setProfile: (profile) => set({ profile }),
+  reserProfile: () => set({ profile: null }),
+}));
+
+export { useUser, User, type UserState, useProfile };

@@ -1,16 +1,24 @@
 import { LogOut, Menu, Search, Settings, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
-import { useUser } from "../store";
+import { useUser, useProfile } from "../store";
 import { useAuthUser } from "../hooks/useUser";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import { result } from "../lib/appwrite";
+import { type Models } from "appwrite";
+
+export interface ProfileOp extends Models.DocumentList<Models.Document> {
+  name: string;
+}
 
 function Navbar() {
   const { user } = useUser();
+  const { profile } = useProfile();
   const { handleLogout } = useAuthUser();
   const [isHomeMenuOpen, setIsHomeMenuOpen] = useState(false);
   const navigate = useNavigate();
+  console.log(profile);
   return (
     <div className="bg-transparent relative z-[2]">
       <nav className="bg-inherit flex items-center justify-between p-5">
@@ -46,14 +54,22 @@ function Navbar() {
             </li>
             {user !== null ? (
               <div className="w-full md:w-fit flex flex-col md:items-center gap-2 absolute p-5 md:p-0 md:justify-normal  md:static bottom-0 right-0  border-t-2 border-border-color md:hidden">
-                <div className="md:hidden">
-                  <span className="text-base font-medium">vyuba</span>
+                <div className="md:hidden flex items-center gap-2">
+                  <span className="w-10 h-10 bg-background-color p-2 items-center border border-border-color flex rounded-full">
+                    <img className="" src={result} alt="" />
+                  </span>
+                  <span className="text-base font-medium">
+                    {profile?.documents[0]?.name}
+                  </span>
                 </div>
                 <div className="md:w-fit flex flex-row items-center gap-2">
-                  <button className="border flex-1 md:flex-none border-border-color capitalize p-2 px-4 text-base rounded-xl bg-secondary w-fit flex flex-row gap-2 items-center justify-center md:justify-normal hover:bg-background-color">
+                  <Link
+                    className="border flex-1 md:flex-none border-border-color capitalize p-2 px-4 text-base rounded-xl bg-secondary w-fit flex flex-row gap-2 items-center justify-center md:justify-normal hover:bg-background-color"
+                    to={"/cw/settings/profile"}
+                  >
                     <Settings size={18} />
                     <span className="font-medium">Account settings</span>
-                  </button>
+                  </Link>
                   <button
                     onClick={() => {
                       toast.promise(
@@ -75,7 +91,7 @@ function Navbar() {
                         }
                       );
                     }}
-                    className="border border-border-color capitalize p-2 px-4 text-base rounded-xl bg-secondary w-fit flex flex-row gap-2 items-center hover:bg-background-color"
+                    className="border border-border-color capitalize p-2 px-4 text-base rounded-xl bg-secondary w-fit flex flex-row gap-2 items-center hover:bg-danger-dark-color hover:text-danger-color"
                   >
                     <LogOut size={18} />
                     <span className="font-medium">log out</span>

@@ -1,17 +1,20 @@
 import { config } from "../lib/env";
-import { databases, Query } from "../lib/appwrite";
-import { User } from "../store";
-import { Models } from "appwrite";
+import { databases, Query, storage } from "../lib/appwrite";
+import { User, useProfile } from "../store";
+import { Quiz } from "../pages/Dashboard/QuizPage";
+import { QuizData } from "../pages/Dashboard/Quiz";
+import { ProfileOp } from "../components/Navbar";
 export const useGetDatabase = () => {
-  const getUserData = async (user: User) => {
+  const { setProfile } = useProfile();
+  const getUserData = async (user: User): Promise<ProfileOp | null> => {
     try {
       const response = await databases.listDocuments(
         config.databaseId,
         config.userCollectinId,
         [Query.equal("user_id", user?.$id)]
       );
-
-      return response;
+      setProfile(response as ProfileOp);
+      return response as ProfileOp;
     } catch (error) {
       console.log(error);
       return null;
@@ -72,7 +75,7 @@ export const useGetDatabase = () => {
           );
 
           return {
-            ...project, // Include project details
+            projectData: { ...project }, // Include project details
             quizzes: quizResponse.documents || [], // Attach quiz data
           };
         })
@@ -99,32 +102,40 @@ export const useGetDatabase = () => {
     }
   };
 
-  const getQuizData = async (id: string): Promise<Models.Document | null> => {
+  const getQuizData = async (id: string): Promise<Quiz | null> => {
     try {
       const response = await databases.getDocument(
         config.databaseId,
         config.userProjectsQuizId,
         id
       );
-      return response;
+      return response as Quiz;
     } catch (error) {
       console.log(error);
       return null;
     }
   };
 
-  const getQuiz = async (id: string) => {
+  const getQuiz = async (id: string): Promise<QuizData | null> => {
     try {
       const response = await databases.listDocuments(
         config.databaseId,
         config.QuizQuestionId,
         [Query.equal("quiz_id", id)]
       );
-      return response;
+      return response as QuizData;
     } catch (error) {
       console.log(error);
       return null;
     }
+  };
+
+  const handleProjectDp = async (fileId: string) => {
+    const result = await storage.getFilePreview(
+      config.projectProfilebucketId, // bucketId
+      fileId // fileId
+    );
+    return result;
   };
 
   return {
@@ -134,5 +145,6 @@ export const useGetDatabase = () => {
     getProjectQuiz,
     getQuizData,
     getQuiz,
+    handleProjectDp,
   };
 };
