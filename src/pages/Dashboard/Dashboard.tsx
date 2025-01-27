@@ -50,9 +50,10 @@ function Dashboard() {
 
   const { isLoading, data } = useQuery({
     queryKey: ["projects"],
-    queryFn: () => {
+    queryFn: async () => {
       if (user) {
-        return getUserProjects(user); // Call the function only if user is not null
+        const UserProjects = await getUserProjects(user);
+        return { UserProjects }; // Call the function only if user is not null
       } else {
         // Handle the case when user is null
         return []; // or return an appropriate value
@@ -70,7 +71,7 @@ function Dashboard() {
     }
   }, [data, setCurrentProject]);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <div>
@@ -117,10 +118,10 @@ function Dashboard() {
               </ul>
             </div>
             <ul className=" md:h-full md:border-none capitalize bg-secondary-color md:bg-transparent text-text-color font-neue text-xl  flex flex-col gap-1  relative">
-              {currentProject?.map((data) => (
+              {currentProject?.UserProjects?.map((data) => (
                 <NavLink
                   className={({ isActive }) =>
-                    ` w-12 h-12 bg-background-color rounded-lg border-2 ${
+                    ` w-12 h-12 bg-background-color rounded-lg border-2 overflow-hidden ${
                       isActive ? "border-accent-color" : "border-border-color"
                     } `
                   }
@@ -128,7 +129,7 @@ function Dashboard() {
                   state={data}
                   key={data.$id}
                 >
-                  <span key={data?.$id} className=""></span>
+                  <img key={data?.$id} src={data?.image} alt="" />
                 </NavLink>
               ))}
               <div className="absolute flex-col gap-5 border-t-2 border-border-color pt-4 bottom-3 flex items-center justify-center  w-full">

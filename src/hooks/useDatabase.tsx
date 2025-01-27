@@ -21,6 +21,18 @@ export const useGetDatabase = () => {
     }
   };
 
+  const handleQuizBanner = async (id: string) => {
+    try {
+      const BannerImage = await storage.getFilePreview(
+        config.projectBannerbucketId,
+        id
+      );
+      return { BannerImage };
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const getUserProjects = async (user: User) => {
     try {
       const response = await databases.listDocuments(
@@ -40,9 +52,14 @@ export const useGetDatabase = () => {
             [Query.equal("$id", project?.user_project_id)]
           );
 
+          const image = await handleProjectDp(
+            projectResponse.documents[0]?.thumbnail_url
+          );
+
           return {
             ...project, // Spread the current user's project
-            projectData: projectResponse.documents[0] || null, // Include related project data
+            projectData: projectResponse.documents[0] || null,
+            image, // Include related project data
           };
         })
       );
@@ -146,5 +163,6 @@ export const useGetDatabase = () => {
     getQuizData,
     getQuiz,
     handleProjectDp,
+    handleQuizBanner,
   };
 };
