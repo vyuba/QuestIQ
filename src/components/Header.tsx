@@ -4,7 +4,7 @@ import mascot2 from "../assets/mascot-2.svg";
 
 function Header() {
   return (
-    <div className="w-full  px-7">
+    <div className="w-full  px-4">
       <div className="w-full h-full border-b-2 border-r-2 border-l-2 rounded-b-xl border-border-color bg-secondary-color relative overflow-hidden py-5">
         <Navbar />
         <img

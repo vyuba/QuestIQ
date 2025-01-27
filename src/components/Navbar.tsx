@@ -30,7 +30,7 @@ function Navbar() {
             isHomeMenuOpen ? "fixed" : "hidden md:flex"
           } px-5 md:p-0 bg-background-color md:bg-transparent z-[1000000] flex justify-center h-screen md:h-full overflow-hidden items-center inset-0 md:static`}
         >
-          <ul className="w-full relative h-[calc(100dvh-200px)] md:h-full md:border-none border-2 border-border-color rounded-xl   bg-secondary-color md:bg-transparent text-text-color font-neue text-xl px-3 py-4 md:px-0 md:py-0 flex flex-col md:flex-row gap-4 ">
+          <ul className="w-full relative h-[calc(100dvh-200px)] md:h-full md:border-none border-2 border-border-color rounded-xl   bg-secondary-color md:bg-transparent text-text-color font-neue text-lg px-3 py-4 md:px-0 md:py-0 flex flex-col md:flex-row gap-3 ">
             <button
               onClick={() => setIsHomeMenuOpen(!isHomeMenuOpen)}
               className="md:hidden p-1 self-end w-fit border-2 rounded-md border-border-color "
@@ -53,7 +53,7 @@ function Navbar() {
               Contact Us
             </li>
             {user !== null ? (
-              <div className="w-full md:w-fit flex flex-col md:items-center gap-2 absolute p-5 md:p-0 md:justify-normal  md:static bottom-0 right-0  border-t-2 border-border-color md:hidden">
+              <div className="w-full md:w-fit flex flex-col md:items-center gap-2 absolute p-5 md:p-0 md:justify-normal bg-secondary-color  md:static bottom-0 right-0  border-t-2 border-border-color md:hidden">
                 <div className="md:hidden flex items-center gap-2">
                   <span className="w-10 h-10 bg-background-color p-2 items-center border border-border-color flex rounded-full">
                     <img className="" src={result} alt="" />

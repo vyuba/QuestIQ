@@ -262,8 +262,9 @@ body {
 }
 
 .truncated-text {
-  text-overflow: ellipsis; /* Adds the "..." when text overflows */
+  text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Controls how many lines of text to show before truncating */
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
