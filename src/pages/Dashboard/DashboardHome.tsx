@@ -5,8 +5,7 @@ import { useGetDatabase } from "../../hooks/useDatabase";
 import { useLocation } from "react-router";
 
 function DashboardHome() {
-  const { getProjectQuiz, handleProjectDp, handleQuizBanner } =
-    useGetDatabase();
+  const { getProjectQuiz, handleProjectDp } = useGetDatabase();
   const location = useLocation();
   const project = location.state;
 

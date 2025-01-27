@@ -56,7 +56,7 @@ function Dashboard() {
         return { UserProjects }; // Call the function only if user is not null
       } else {
         // Handle the case when user is null
-        return []; // or return an appropriate value
+        return null; // or return an appropriate value
       }
     },
   });
