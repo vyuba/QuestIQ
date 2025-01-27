@@ -87,7 +87,7 @@ function Dashboard() {
             isDashboardMenuOpen ? "fixed flex" : "hidden md:flex "
           } px-2 md:p-0   bg-transparent z-[1000]  justify-center h-screen overflow-hidden items-end top-0 right-0 md:right-2 md:mr-3  md:w-full md:max-w-[260px]`}
         >
-          <div className="flex flex-row w-fit h-screen md:h-[calc(100%-20px)] bg-secondary-color mb-2  border-2 border-border-color rounded-xl  overflow-hidden gap-2 p-2">
+          <div className="flex flex-row w-fit h-[calc(100lvh-6em)] md:h-[calc(100%-20px)] bg-secondary-color mb-2  border-2 border-border-color rounded-xl  overflow-hidden gap-2 p-2">
             <div className=" w-48 md:max-w-[54] border-2 border-border-color rounded-lg h-full bg-background-color p-2">
               <div className="w-full h-[136px] bg-secondary-color border-2 border-border-color rounded-md flex items-center justify-center">
                 <ImagePlus
