@@ -27,13 +27,21 @@ function DashboardHome() {
         );
         const quizzes = await getProjectQuiz(project.projectData.$id);
         const image = await handleProjectDp(project.projectData.thumbnail_url);
+
         return { Data: { quizzes }, image, isMember };
+      }
+      if (quizzes?.isMember) {
+        navigate(`/cw/dashboard/${project?.projectData?.project_name}`, {
+          state: project,
+        });
       }
       return null;
     },
     enabled: !!project?.projectData?.$id && !!user?.$id,
   });
+
   if (!project) return <p className="text-red-500">No project found</p>;
+
   if (isLoading) {
     return (
       <div className="px-5">
@@ -68,11 +76,11 @@ function DashboardHome() {
 
   const Role = project?.role;
 
-  if (quizzes?.isMember) {
-    navigate(`/cw/dashboard/${project?.projectData?.project_name}`, {
-      state: project,
-    });
-  }
+  // if (quizzes?.isMember) {
+  //   navigate(`/cw/dashboard/${project?.projectData?.project_name}`, {
+  //     state: project,
+  //   });
+  // }
 
   // admin
   return (

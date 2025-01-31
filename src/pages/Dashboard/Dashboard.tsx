@@ -66,7 +66,7 @@ function Dashboard() {
   }, [data, setCurrentProject]);
 
   console.log(data);
-  console.log(project);
+  // console.log(project);
 
   return (
     <div>
