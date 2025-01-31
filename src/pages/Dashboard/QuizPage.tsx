@@ -37,9 +37,9 @@ function QuizPage() {
             </span>
           </span>
         </div>
-        <div className="flex flex-col gap-2 py-4">
+        <div className="flex flex-col gap-2 py-4 overflow-hidden w-full">
           <span className="capitalize font-medium">description</span>
-          <span className="capitalize  text-lg font-medium">
+          <span className="capitalize  text-lg font-medium w-full break-words ">
             {data?.description}
           </span>
         </div>

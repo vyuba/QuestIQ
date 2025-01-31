@@ -1,5 +1,5 @@
 import { config } from "../lib/env";
-import { databases, Query, storage } from "../lib/appwrite";
+import { databases, ID, Query, storage } from "../lib/appwrite";
 import { User, useProfile } from "../store";
 import { Quiz } from "../pages/Dashboard/QuizPage";
 import { QuizData } from "../pages/Dashboard/Quiz";
@@ -155,6 +155,42 @@ export const useGetDatabase = () => {
     return result;
   };
 
+  const handleAddToUserProjects = async (projectId: string, userId: string) => {
+    await databases.createDocument(
+      config.databaseId,
+      config.userProjectsCollectionId,
+      ID.unique(),
+      {
+        user_project_id: projectId,
+        user_id: userId,
+        role: "participant",
+      }
+    );
+  };
+
+  const checkUserProjectMembership = async (
+    userId: string,
+    projectId: string
+  ) => {
+    try {
+      const response = await databases.listDocuments(
+        config.databaseId,
+        config.userProjectsCollectionId,
+        [
+          Query.equal("user_id", userId),
+          Query.equal("user_project_id", projectId),
+        ]
+      );
+
+      console.log(response);
+
+      return response.documents.length > 0; // Returns true if user is a member
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  };
+
   return {
     getUserData,
     getAllProjects,
@@ -164,5 +200,7 @@ export const useGetDatabase = () => {
     getQuiz,
     handleProjectDp,
     handleQuizBanner,
+    handleAddToUserProjects,
+    checkUserProjectMembership,
   };
 };

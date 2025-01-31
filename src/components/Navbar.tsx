@@ -37,8 +37,14 @@ function Navbar() {
             >
               <X className="text-text-color bg-transparent " />
             </button>
+            <Link
+              className="font-medium hover:bg-background-color pl-5 py-3 rounded-2xl md:py-0 md:pl-0 cursor-pointer"
+              to={"/create-project"}
+            >
+              Create Community
+            </Link>
             <li className="font-medium hover:bg-background-color pl-5 py-3 rounded-2xl md:py-0 md:pl-0 cursor-pointer">
-              Home
+              Communities
             </li>
             <li className="font-medium hover:bg-background-color pl-5 py-3 rounded-2xl md:py-0 md:pl-0 cursor-pointer">
               How it works

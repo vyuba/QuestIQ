@@ -1,14 +1,7 @@
-import { NavLink, Outlet, useNavigate, Link } from "react-router";
+import { NavLink, Outlet, useNavigate, Link, useLocation } from "react-router";
 import { useState, useEffect } from "react";
 import DashboardNavber from "../../components/DashboardNavber";
-import {
-  ChartBarStacked,
-  ImagePlus,
-  Inbox,
-  LogOut,
-  Puzzle,
-  Settings,
-} from "lucide-react";
+import { ChartBarStacked, Inbox, LogOut, Puzzle, Settings } from "lucide-react";
 import { useGetDatabase } from "../../hooks/useDatabase";
 import { useUser } from "../../store";
 import { useAuthUser } from "../../hooks/useUser";
@@ -21,9 +14,10 @@ function Dashboard() {
   const [isDashboardMenuOpen, setIsDashboardMenuOpen] = useState(false);
   const { handleLogout } = useAuthUser();
   const { setCurrentProject, currentProject } = useProject();
-
+  const location = useLocation();
   const navigate = useNavigate();
 
+  const project = location.state;
   const DashboardLinks = [
     {
       id: 1,
@@ -71,7 +65,8 @@ function Dashboard() {
     }
   }, [data, setCurrentProject]);
 
-  // console.log(data);
+  console.log(data);
+  console.log(project);
 
   return (
     <div>
@@ -90,10 +85,11 @@ function Dashboard() {
         >
           <div className="flex flex-row w-fit h-[calc(100%-6em)] md:h-[calc(100%-20px)] bg-secondary-color mb-2  border-2 border-border-color rounded-xl  overflow-hidden gap-2 p-2">
             <div className=" w-48 md:max-w-[54] border-2 border-border-color rounded-lg h-full bg-background-color p-2">
-              <div className="w-full h-[136px] bg-secondary-color border-2 border-border-color rounded-md flex items-center justify-center">
-                <ImagePlus
-                  size={24}
-                  className="text-text-secondary-color bg-transparent "
+              <div className="w-full h-[136px] bg-secondary-color border-2 border-border-color rounded-md relative">
+                <img
+                  className="absolute object-cover w-full h-full inset-0"
+                  src={project?.image}
+                  alt={project?.projectData?.project_name}
                 />
               </div>
               <ul className="flex flex-col w-full gap-2 pt-2">

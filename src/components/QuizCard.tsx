@@ -6,6 +6,7 @@ interface Quiz {
   title: string;
   id: string;
   Banner: string;
+  Role: boolean | undefined;
 }
 
 import { useGetDatabase } from "../hooks/useDatabase";
@@ -16,6 +17,7 @@ const QuizCard: React.FC<Quiz> = ({
   title,
   id,
   Banner,
+  Role,
 }) => {
   const { handleQuizBanner } = useGetDatabase();
 
@@ -27,7 +29,10 @@ const QuizCard: React.FC<Quiz> = ({
   console.log(data?.BannerImage);
 
   return (
-    <Link to={`about-quiz/${id}`}>
+    <Link
+      className={` ${!Role && "pointer-events-none"}  `}
+      to={`about-quiz/${id}`}
+    >
       <div className="text-text-color font-neue bg-secondary-color border-2 border-border-color rounded-xl flex flex-col p-3  overflow-hidden">
         <div className="border-2 h-20 border-border-color rounded-md">
           <img className="w-full h-full" src={data?.BannerImage} alt="" />

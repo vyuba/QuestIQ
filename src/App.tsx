@@ -89,8 +89,8 @@ function App() {
           <Route path="/auth" element={<AuthLayout />}>
             <Route path="login" element={<Login />} />
             <Route path="otp-session" element={<OtpSession />} />
-            <Route path="create-project" element={<CreateProject />} />
           </Route>
+          <Route path="/create-project" element={<CreateProject />} />
           <Route path="/cw/dashboard" element={<Dashboard />}>
             <Route path=":project" element={<DashboardHome />} />
             <Route path="leaderboard" element={<DashboardLeaderboard />} />
