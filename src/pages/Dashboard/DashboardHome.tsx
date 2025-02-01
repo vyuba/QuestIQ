@@ -76,12 +76,6 @@ function DashboardHome() {
 
   const Role = project?.role;
 
-  // if (quizzes?.isMember) {
-  //   navigate(`/cw/dashboard/${project?.projectData?.project_name}`, {
-  //     state: project,
-  //   });
-  // }
-
   // admin
   return (
     <div className="w-full p-5">
@@ -94,7 +88,7 @@ function DashboardHome() {
         />
       )}
 
-      {Role === "admin" && <AdminDashboard />}
+      {Role === "admin" && <AdminDashboard project={project} />}
     </div>
   );
 }

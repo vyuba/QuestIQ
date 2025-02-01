@@ -4,6 +4,7 @@ import { User, useProfile } from "../store";
 import { Quiz } from "../pages/Dashboard/QuizPage";
 import { QuizData } from "../pages/Dashboard/Quiz";
 import { ProfileOp } from "../components/Navbar";
+import { Models } from "appwrite";
 export const useGetDatabase = () => {
   const { setProfile } = useProfile();
   const getUserData = async (user: User): Promise<ProfileOp | null> => {
@@ -147,6 +148,22 @@ export const useGetDatabase = () => {
     }
   };
 
+  const getQuizList = async (
+    id: string
+  ): Promise<null | Models.DocumentList<Models.Document>> => {
+    try {
+      const response = await databases.listDocuments(
+        config.databaseId,
+        config.userProjectsQuizId,
+        [Query.equal("project_id", id)]
+      );
+      return response as Models.DocumentList<Models.Document>;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const handleProjectDp = async (fileId: string) => {
     const result = await storage.getFilePreview(
       config.projectProfilebucketId, // bucketId
@@ -198,6 +215,7 @@ export const useGetDatabase = () => {
     getProjectQuiz,
     getQuizData,
     getQuiz,
+    getQuizList,
     handleProjectDp,
     handleQuizBanner,
     handleAddToUserProjects,

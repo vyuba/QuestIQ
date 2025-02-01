@@ -23,6 +23,7 @@ function CreateProject() {
   const [image, setImage] = useState<File | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [projectId, setProjectId] = useState("");
+  const [imageURL, setImageURL] = useState("");
   const [inputValue, setInputValue] = useState(""); // Input field value
   const [communityForm, setCommunityForm] = useState<CommunityForm>({
     name: null,
@@ -70,8 +71,6 @@ function CreateProject() {
       [name]: value, // Dynamically update the field based on the input's name
     }));
   };
-
-  const [imageURL, setImageURL] = useState("");
 
   const handleImageChange = (event: ImageChangeEvent): void => {
     const file = event.target.files[0];
